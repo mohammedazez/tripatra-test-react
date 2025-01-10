@@ -14,7 +14,8 @@ export const login = createAsyncThunk(
   "auth/login",
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      const response = await fetch("/login", {
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
+      const response = await fetch(`${API_BASE_URL}/login`, {
         method: "POST",
         body: JSON.stringify({ email, password }),
         headers: {
