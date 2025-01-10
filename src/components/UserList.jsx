@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchUsers, deleteUserAsync } from "../redux/userSlice";
+import { fetchUsers, deleteUserAsync, logout } from "../redux/userSlice";
 import { Link } from "react-router-dom";
 
 const UserList = () => {
@@ -20,8 +20,8 @@ const UserList = () => {
   };
 
   const handleLogout = () => {
-    // Implement logout logic here
-    alert("Logged out successfully!");
+    dispatch(logout());
+    window.location.reload();
   };
 
   if (loading) return <p className="text-center text-xl">Loading...</p>;

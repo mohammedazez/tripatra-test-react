@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchProducts, deleteProductAsync } from "../redux/productSlice";
+import {
+  fetchProducts,
+  deleteProductAsync,
+  logout,
+} from "../redux/productSlice";
 import { Link } from "react-router-dom";
 
 const ProductList = () => {
@@ -20,8 +24,8 @@ const ProductList = () => {
   };
 
   const handleLogout = () => {
-    // Implement logout logic here
-    alert("Logged out successfully!");
+    dispatch(logout());
+    window.location.reload();
   };
 
   if (loading) return <p className="text-center text-xl">Loading...</p>;
