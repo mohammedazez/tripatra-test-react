@@ -6,6 +6,7 @@ import AddProduct from "./components/AddProduct";
 import EditUser from "./components/EditUser";
 import EditProduct from "./components/EditProduct";
 import Login from "./components/Login";
+import Home from "./components/Home";
 import { useSelector } from "react-redux";
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
           <Login />
         ) : (
           <Routes>
+            <Route path="/" element={<Home />} />
             {/* users */}
             <Route path="/users" element={<UserList />} />
             <Route path="/add-user" element={<AddUser />} />

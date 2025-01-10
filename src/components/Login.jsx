@@ -15,7 +15,7 @@ const Login = () => {
     e.preventDefault();
     dispatch(login({ email, password })).then((result) => {
       if (result.meta.requestStatus === "fulfilled") {
-        navigate("/users");
+        navigate("/");
       }
     });
   };
