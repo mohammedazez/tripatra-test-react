@@ -1,9 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+const token = localStorage.getItem("token");
+const isAuthenticated = !!token;
+
 const initialState = {
   products: [],
-  isAuthenticated: false,
-  token: null,
+  isAuthenticated,
+  token,
   loading: false,
   error: null,
 };
@@ -11,9 +14,7 @@ const initialState = {
 export const fetchProducts = createAsyncThunk(
   "product/fetchProducts",
   async (_, { getState, rejectWithValue }) => {
-    // const token = getState().product.token;
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6aXpAbWFpbC5jb20iLCJleHAiOjE3MzY1Nzc2Nzl9.j6QpcpJSJyQPyMcjpm56QOlH83hj_ex1D6YY8vz_aRE";
+    const token = getState().auth.token;
 
     try {
       const response = await fetch("http://localhost:8080/query", {
@@ -50,9 +51,8 @@ export const fetchProducts = createAsyncThunk(
 
 export const deleteProductAsync = createAsyncThunk(
   "product/deleteProductAsync",
-  async (id, { rejectWithValue }) => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6aXpAbWFpbC5jb20iLCJleHAiOjE3MzY1Nzc2Nzl9.j6QpcpJSJyQPyMcjpm56QOlH83hj_ex1D6YY8vz_aRE";
+  async (id, { getState, rejectWithValue }) => {
+    const token = getState().auth.token;
 
     try {
       const response = await fetch("http://localhost:8080/query", {
@@ -86,8 +86,7 @@ export const deleteProductAsync = createAsyncThunk(
 export const updateProductAsync = createAsyncThunk(
   "product/updateProductAsync",
   async ({ id, name, price, stock }, { getState, rejectWithValue }) => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6aXpAbWFpbC5jb20iLCJleHAiOjE3MzY1ODc0MTR9.2ebxCSn9cuMiNUBplrNYr6XPJXG1C9KNFsZepPoH9J0";
+    const token = getState().auth.token;
 
     console.log(id, name, price, stock);
     try {
@@ -127,10 +126,7 @@ export const updateProductAsync = createAsyncThunk(
 export const addProductAsync = createAsyncThunk(
   "product/addProductAsync",
   async ({ name, price, stock }, { getState, rejectWithValue }) => {
-    // const token = getState().product.token;
-
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6aXpAbWFpbC5jb20iLCJleHAiOjE3MzY1Nzc2Nzl9.j6QpcpJSJyQPyMcjpm56QOlH83hj_ex1D6YY8vz_aRE";
+    const token = getState().auth.token;
 
     try {
       const response = await fetch("http://localhost:8080/query", {
@@ -170,9 +166,11 @@ const productSlice = createSlice({
   name: "product",
   initialState,
   reducers: {
-    setProducts: (state, action) => {
-      state.isAuthenticated = true;
-      state.token = action.payload;
+    logout: (state) => {
+      state.isAuthenticated = false;
+      state.token = null;
+
+      localStorage.removeItem("token");
     },
   },
   extraReducers: (builder) => {
@@ -245,6 +243,5 @@ const productSlice = createSlice({
   },
 });
 
-export const { setProducts, addProduct, updateProduct, deleteProduct } =
-  productSlice.actions;
+export const { logout } = productSlice.actions;
 export default productSlice.reducer;

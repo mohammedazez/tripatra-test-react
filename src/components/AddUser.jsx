@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addUserAsync } from "../redux/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const AddUser = () => {
   const dispatch = useDispatch();
@@ -8,6 +9,8 @@ const AddUser = () => {
   const [email, setEmail] = useState("");
 
   const { loading, error } = useSelector((state) => state.user);
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,6 +30,8 @@ const AddUser = () => {
       .catch((err) => {
         alert(`Failed to add user: ${err}`);
       });
+
+    navigate("/users");
   };
 
   return (

@@ -9,25 +9,25 @@ import Login from "./components/Login";
 import { useSelector } from "react-redux";
 
 const App = () => {
-  // const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   return (
     <Router>
       <div>
-        {/* {!isAuthenticated ? (
+        {!isAuthenticated ? (
           <Login />
-        ) : ( */}
-        <Routes>
-          {/* users */}
-          <Route path="/users" element={<UserList />} />
-          <Route path="/add-user" element={<AddUser />} />
-          <Route path="/edit-user/:id" element={<EditUser />} />
-          {/* products */}
-          <Route path="/products" element={<ProductList />} />
-          <Route path="/add-product" element={<AddProduct />} />
-          <Route path="/edit-product/:id" element={<EditProduct />} />
-        </Routes>
-        {/* // )} */}
+        ) : (
+          <Routes>
+            {/* users */}
+            <Route path="/users" element={<UserList />} />
+            <Route path="/add-user" element={<AddUser />} />
+            <Route path="/edit-user/:id" element={<EditUser />} />
+            {/* products */}
+            <Route path="/products" element={<ProductList />} />
+            <Route path="/add-product" element={<AddProduct />} />
+            <Route path="/edit-product/:id" element={<EditProduct />} />
+          </Routes>
+        )}
       </div>
     </Router>
   );

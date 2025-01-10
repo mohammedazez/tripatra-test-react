@@ -1,22 +1,23 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { setAuth } from "../redux/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../redux/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const authStatus = useSelector((state) => state.auth.status);
+  const error = useSelector((state) => state.auth.error);
 
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
-    const token = await fetch("http://localhost:8080/login", {
-      method: "POST",
-      body: JSON.stringify({ email, password }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => res.json());
-    dispatch(setAuth(token));
+    dispatch(login({ email, password })).then((result) => {
+      if (result.meta.requestStatus === "fulfilled") {
+        navigate("/users");
+      }
+    });
   };
 
   return (
@@ -33,7 +34,10 @@ const Login = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button type="submit">Login</button>
+      <button type="submit" disabled={authStatus === "loading"}>
+        {authStatus === "loading" ? "Logging in..." : "Login"}
+      </button>
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </form>
   );
 };

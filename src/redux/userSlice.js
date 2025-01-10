@@ -1,9 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+const token = localStorage.getItem("token");
+const isAuthenticated = !!token;
+
 const initialState = {
   users: [],
-  isAuthenticated: false,
-  token: null,
+  isAuthenticated,
+  token,
   loading: false,
   error: null,
 };
@@ -11,9 +14,7 @@ const initialState = {
 export const fetchUsers = createAsyncThunk(
   "user/fetchUsers",
   async (_, { getState, rejectWithValue }) => {
-    // const token = getState().user.token;
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6aXpAbWFpbC5jb20iLCJleHAiOjE3MzY1Nzc2Nzl9.j6QpcpJSJyQPyMcjpm56QOlH83hj_ex1D6YY8vz_aRE";
+    const token = getState().auth.token;
 
     try {
       const response = await fetch("http://localhost:8080/query", {
@@ -47,14 +48,10 @@ export const fetchUsers = createAsyncThunk(
   }
 );
 
-// Async thunk for adding a user
 export const addUserAsync = createAsyncThunk(
   "user/addUserAsync",
   async ({ name, email }, { getState, rejectWithValue }) => {
-    // const token = getState().user.token;
-
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6aXpAbWFpbC5jb20iLCJleHAiOjE3MzY1Nzc2Nzl9.j6QpcpJSJyQPyMcjpm56QOlH83hj_ex1D6YY8vz_aRE";
+    const token = getState().auth.token;
 
     try {
       const response = await fetch("http://localhost:8080/query", {
@@ -91,9 +88,8 @@ export const addUserAsync = createAsyncThunk(
 
 export const deleteUserAsync = createAsyncThunk(
   "user/deleteUserAsync",
-  async (id, { rejectWithValue }) => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6aXpAbWFpbC5jb20iLCJleHAiOjE3MzY1Nzc2Nzl9.j6QpcpJSJyQPyMcjpm56QOlH83hj_ex1D6YY8vz_aRE";
+  async (id, { getState, rejectWithValue }) => {
+    const token = getState().auth.token;
 
     try {
       const response = await fetch("http://localhost:8080/query", {
@@ -127,8 +123,7 @@ export const deleteUserAsync = createAsyncThunk(
 export const updateUserAsync = createAsyncThunk(
   "user/updateUserAsync",
   async ({ id, name, email }, { getState, rejectWithValue }) => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6aXpAbWFpbC5jb20iLCJleHAiOjE3MzY1ODc0MTR9.2ebxCSn9cuMiNUBplrNYr6XPJXG1C9KNFsZepPoH9J0";
+    const token = getState().auth.token;
 
     try {
       const response = await fetch("http://localhost:8080/query", {
@@ -167,13 +162,11 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setAuth: (state, action) => {
-      state.isAuthenticated = true;
-      state.token = action.payload;
-    },
     logout: (state) => {
       state.isAuthenticated = false;
       state.token = null;
+
+      localStorage.removeItem("token");
     },
   },
   extraReducers: (builder) => {
@@ -243,7 +236,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { setAuth, logout, addUser, updateUser, deleteUser } =
-  userSlice.actions;
+export const { logout } = userSlice.actions;
 
 export default userSlice.reducer;
