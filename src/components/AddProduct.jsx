@@ -24,7 +24,6 @@ const AddProduct = () => {
     dispatch(addProductAsync({ name, price, stock }))
       .unwrap()
       .then(() => {
-        alert("Product added successfully!");
         setName("");
         setPrice("");
         setStock("");
@@ -36,41 +35,53 @@ const AddProduct = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <input
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          disabled={loading}
-        />
-      </div>
-      <div>
-        <input
-          type="price"
-          placeholder="Price"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          disabled={loading}
-        />
-      </div>
-      <div>
-        <input
-          type="stock"
-          placeholder="Stock"
-          value={stock}
-          onChange={(e) => setStock(e.target.value)}
-          disabled={loading}
-        />
-      </div>
-      <div>
-        <button type="submit" disabled={loading}>
-          {loading ? "Adding..." : "Add Product"}
-        </button>
-      </div>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-    </form>
+    <div className="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
+      <h2 className="text-3xl font-semibold text-center text-indigo-600 mb-6">
+        Add New Product
+      </h2>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <input
+            type="text"
+            placeholder="Product Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            disabled={loading}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
+        </div>
+        <div className="mb-4">
+          <input
+            type="number"
+            placeholder="Price"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            disabled={loading}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
+        </div>
+        <div className="mb-6">
+          <input
+            type="number"
+            placeholder="Stock"
+            value={stock}
+            onChange={(e) => setStock(e.target.value)}
+            disabled={loading}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
+        </div>
+        <div className="mb-6">
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors duration-300"
+          >
+            {loading ? "Adding..." : "Add Product"}
+          </button>
+        </div>
+      </form>
+      {error && <p className="text-red-500 text-center">{error}</p>}
+    </div>
   );
 };
 
