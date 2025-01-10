@@ -5,8 +5,8 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/api": {
-        target: "http://localhost:8080",
+      "/login": {
+        target: "https://tripatra-test-go-71a9e24956bc.herokuapp.com",
         changeOrigin: true,
         secure: false,
       },
