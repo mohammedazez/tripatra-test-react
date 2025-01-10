@@ -15,17 +15,13 @@ export const login = createAsyncThunk(
   async ({ email, password }, { rejectWithValue }) => {
     try {
       const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
-      console.log("API_BASE_URL", API_BASE_URL);
-      const response = await fetch(
-        "https://tripatra-test-go-71a9e24956bc.herokuapp.com/login",
-        {
-          method: "POST",
-          body: JSON.stringify({ email, password }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${API_BASE_URL}/login`, {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       if (!response.ok) {
         throw new Error("Failed to login");
