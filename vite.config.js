@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/login": {
-        target: "http://localhost:8080",
+        target: "https://tripatra-test-go-71a9e24956bc.herokuapp.com",
         changeOrigin: true,
         secure: false,
       },

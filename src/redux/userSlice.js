@@ -17,14 +17,16 @@ export const fetchUsers = createAsyncThunk(
     const token = getState().auth.token;
 
     try {
-      const response = await fetch("http://localhost:8080/query", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          query: `
+      const response = await fetch(
+        "https://tripatra-test-go-71a9e24956bc.herokuapp.com/query",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            query: `
             {
               getUsers {
                 id
@@ -33,8 +35,9 @@ export const fetchUsers = createAsyncThunk(
               }
             }
           `,
-        }),
-      });
+          }),
+        }
+      );
 
       const data = await response.json();
       if (data.errors) {
@@ -54,14 +57,16 @@ export const addUserAsync = createAsyncThunk(
     const token = getState().auth.token;
 
     try {
-      const response = await fetch("http://localhost:8080/query", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          query: `
+      const response = await fetch(
+        "https://tripatra-test-go-71a9e24956bc.herokuapp.com/query",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            query: `
             mutation AddUser($name: String!, $email: String!) {
               addUser(name: $name, email: $email) {
                 id
@@ -70,9 +75,10 @@ export const addUserAsync = createAsyncThunk(
               }
             }
           `,
-          variables: { name, email },
-        }),
-      });
+            variables: { name, email },
+          }),
+        }
+      );
 
       const data = await response.json();
       if (data.errors) {
@@ -92,21 +98,24 @@ export const deleteUserAsync = createAsyncThunk(
     const token = getState().auth.token;
 
     try {
-      const response = await fetch("http://localhost:8080/query", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          query: `
+      const response = await fetch(
+        "https://tripatra-test-go-71a9e24956bc.herokuapp.com/query",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            query: `
             mutation DeleteUser($id: ID!) {
               deleteUser(id: $id)
             }
           `,
-          variables: { id },
-        }),
-      });
+            variables: { id },
+          }),
+        }
+      );
 
       const data = await response.json();
       if (data.errors) {
@@ -126,14 +135,16 @@ export const updateUserAsync = createAsyncThunk(
     const token = getState().auth.token;
 
     try {
-      const response = await fetch("http://localhost:8080/query", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          query: `
+      const response = await fetch(
+        "https://tripatra-test-go-71a9e24956bc.herokuapp.com/query",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            query: `
             mutation UpdateUser($id: ID!, $name: String, $email: String) {
               updateUser(id: $id, name: $name, email: $email) {
                 id
@@ -142,9 +153,10 @@ export const updateUserAsync = createAsyncThunk(
               }
             }
           `,
-          variables: { id, name, email },
-        }),
-      });
+            variables: { id, name, email },
+          }),
+        }
+      );
 
       const data = await response.json();
       if (data.errors) {

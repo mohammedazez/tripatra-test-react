@@ -17,14 +17,16 @@ export const fetchProducts = createAsyncThunk(
     const token = getState().auth.token;
 
     try {
-      const response = await fetch("http://localhost:8080/query", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          query: `
+      const response = await fetch(
+        "https://tripatra-test-go-71a9e24956bc.herokuapp.com/query",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            query: `
             {
               getProducts {
                 id
@@ -34,8 +36,9 @@ export const fetchProducts = createAsyncThunk(
               }
             }
           `,
-        }),
-      });
+          }),
+        }
+      );
 
       const data = await response.json();
       if (data.errors) {
@@ -55,21 +58,24 @@ export const deleteProductAsync = createAsyncThunk(
     const token = getState().auth.token;
 
     try {
-      const response = await fetch("http://localhost:8080/query", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          query: `
+      const response = await fetch(
+        "https://tripatra-test-go-71a9e24956bc.herokuapp.com/query",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            query: `
             mutation DeleteProduct($id: ID!) {
               deleteProduct(id: $id)
             }
           `,
-          variables: { id },
-        }),
-      });
+            variables: { id },
+          }),
+        }
+      );
 
       const data = await response.json();
       if (data.errors) {
@@ -90,14 +96,16 @@ export const updateProductAsync = createAsyncThunk(
 
     console.log(id, name, price, stock);
     try {
-      const response = await fetch("http://localhost:8080/query", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          query: `
+      const response = await fetch(
+        "https://tripatra-test-go-71a9e24956bc.herokuapp.com/query",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            query: `
             mutation UpdateProduct($id: ID!, $name: String, $price: Float, $stock: Int) {
               updateProduct(id: $id, name: $name, price: $price, stock: $stock) {
                 id
@@ -107,9 +115,10 @@ export const updateProductAsync = createAsyncThunk(
               }
             }
           `,
-          variables: { id, name, price, stock },
-        }),
-      });
+            variables: { id, name, price, stock },
+          }),
+        }
+      );
 
       const data = await response.json();
       if (data.errors) {
@@ -129,14 +138,16 @@ export const addProductAsync = createAsyncThunk(
     const token = getState().auth.token;
 
     try {
-      const response = await fetch("http://localhost:8080/query", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          query: `
+      const response = await fetch(
+        "https://tripatra-test-go-71a9e24956bc.herokuapp.com/query",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            query: `
             mutation AddProduct($name: String!, $price: Float!, $stock: Int!) {
               addProduct(name: $name, price: $price, stock: $stock) {
                 id
@@ -146,9 +157,10 @@ export const addProductAsync = createAsyncThunk(
               }
             }
           `,
-          variables: { name, price, stock },
-        }),
-      });
+            variables: { name, price, stock },
+          }),
+        }
+      );
 
       const data = await response.json();
       if (data.errors) {
