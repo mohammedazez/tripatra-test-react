@@ -2,6 +2,11 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const token = localStorage.getItem("token");
 
+const API_BASE_URL =
+  import.meta.env.VITE_NODE_ENV === "development"
+    ? "/login" // Proxy for dev
+    : "https://tripatra-test-go-71a9e24956bc.herokuapp.com/login";
+
 // Initial state
 const initialState = {
   isAuthenticated: !!token,
@@ -14,7 +19,7 @@ export const login = createAsyncThunk(
   "auth/login",
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      const response = await fetch("/login", {
+      const response = await fetch(API_BASE_URL, {
         method: "POST",
         body: JSON.stringify({ email, password }),
         headers: {

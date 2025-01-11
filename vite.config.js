@@ -8,7 +8,7 @@ export default defineConfig({
       "/login": {
         target: "https://tripatra-test-go-71a9e24956bc.herokuapp.com",
         changeOrigin: true,
-        secure: false,
+        secure: true,
       },
     },
   },
