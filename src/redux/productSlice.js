@@ -129,16 +129,14 @@ export const addProductAsync = createAsyncThunk(
     const token = getState().auth.token;
 
     try {
-      const response = await fetch(
-        "https://tripatra-test-go-71a9e24956bc.herokuapp.com/query",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            query: `
+      const response = await fetch(`${API_BASE_URL}/query`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          query: `
             mutation AddProduct($name: String!, $price: Float!, $stock: Int!) {
               addProduct(name: $name, price: $price, stock: $stock) {
                 id
@@ -148,10 +146,9 @@ export const addProductAsync = createAsyncThunk(
               }
             }
           `,
-            variables: { name, price, stock },
-          }),
-        }
-      );
+          variables: { name, price, stock },
+        }),
+      });
 
       const data = await response.json();
       if (data.errors) {
